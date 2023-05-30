@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import TaskCard from "@/components/TaskCard";
-import { useTasks } from "@/context/TasksContext";
+import TaskCard from '@/components/TaskCard'
+import { useTasks } from '@/context/TasksContext'
 
 export default function Page() {
-  const { tasks } = useTasks();
-  console.log(tasks);
+  const { tasks } = useTasks()
+  console.log(tasks)
 
   return (
     <div>
@@ -13,5 +13,5 @@ export default function Page() {
         <TaskCard key={task.id} task={task} />
       ))}
     </div>
-  );
+  )
 }
