@@ -1,13 +1,16 @@
-'use client'
+"use client"
 
-import { useTasks } from '@/context/TasksContext'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useTasks } from "@/context/TasksContext"
+import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
 
-export default function Page() {
-  const [task, setTask] = useState('')
+export default function Page({ params }) {
+  const [task, setTask] = useState({
+    title: "",
+    description: ""
+  })
 
-  const { createTask } = useTasks()
+  const { createTask, tasks, updateTask } = useTasks()
   const router = useRouter()
 
   const handleChange = (e) => {
@@ -16,15 +19,28 @@ export default function Page() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(task)
-    createTask(task.title, task.description)
-    router.push('/')
+
+    if (params.id) {
+      updateTask(params.id, task)
+    } else {
+      createTask(task.title, task.description)
+    }
+
+    router.push("/")
   }
+  useEffect(() => {
+    if (params.id) {
+      const taskFound = tasks.find((task) => task.id === params.id)
+      if (taskFound) {
+        setTask(taskFound.title, taskFound.description)
+      }
+    }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} name="title" placeholder="write a title" />
-      <textarea
+      <input value={task.title} onChange={handleChange} name="title" placeholder="write a title" />
+      <textarea value={task.description}
         onChange={handleChange}
         name="description"
         placeholder="write a description"
