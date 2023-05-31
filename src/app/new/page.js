@@ -1,25 +1,25 @@
-"use client";
+'use client'
 
-import { useTasks } from "@/context/TasksContext";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useTasks } from '@/context/TasksContext'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function Page() {
-  const [task, setTask] = useState("");
+  const [task, setTask] = useState('')
 
-  const { createTask } = useTasks();
-  const router = useRouter();
+  const { createTask } = useTasks()
+  const router = useRouter()
 
   const handleChange = (e) => {
-    setTask({ ...task, [e.target.name]: e.target.value });
-  };
+    setTask({ ...task, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(task);
-    createTask(task.title, task.description);
-    router.push("/");
-  };
+    e.preventDefault()
+    console.log(task)
+    createTask(task.title, task.description)
+    router.push('/')
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -31,5 +31,5 @@ export default function Page() {
       />
       <button>save</button>
     </form>
-  );
+  )
 }

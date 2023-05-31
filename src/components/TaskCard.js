@@ -1,7 +1,10 @@
+import { useTasks } from '@/context/TasksContext'
 import { useRouter } from 'next/navigation'
 
 export default function TaskCard({ task }) {
   const router = useRouter()
+
+  const { deleteTask } = useTasks()
 
   return (
 
@@ -11,7 +14,13 @@ export default function TaskCard({ task }) {
     >
 
       <h1>{task.title}</h1>
-      <button>Delete</button>
+      <button onClick={(e) => {
+        e.stopPropagation()
+
+        const accept = confirm('Are you sure?')
+
+        if (accept) deleteTask(task.id)
+      }}>Delete</button>
       <p>{task.description}</p>
     </div>
   )
